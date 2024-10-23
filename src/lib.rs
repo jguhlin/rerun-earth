@@ -301,40 +301,6 @@ fn mid_coord(c1: Coord<f64>, c2: Coord<f64>) -> Coord<f64> {
     Coord { x: lon_mid, y: lat_mid }
 }
 
-
-
-fn main() {
-    let sphere_radius = 6_371_000.0; // Earth's mean radius in meters
-    let max_subdivision_length = 100_000.0; // 100 km
-    let subdivision_depth = 2; // Adjust depth as needed
-
-    let rec = rerun::RecordingStreamBuilder::new("earth_example")
-        .connect()
-        .expect("Error connecting to Rerun");
-
-    plot_shapefile(
-        &rec,
-        "land",
-        "50m_land/ne_50m_land.shp",
-        0x00FF00FF,
-        sphere_radius,
-        max_subdivision_length,
-        subdivision_depth,
-    );
-
-    plot_shapefile(
-        &rec,
-        "ocean",
-        "50m_ocean/ne_50m_ocean.shp",
-        0x0000FFFF,
-        sphere_radius,
-        max_subdivision_length,
-        subdivision_depth,
-    );
-
-
-}
-
 pub fn plot_shapefile(
     rec: &rerun::RecordingStream,
     name: &str,
@@ -379,7 +345,7 @@ pub fn plot_shapefile(
 /// # Returns
 ///
 /// A `[f64; 3]` array representing the (x, y, z) coordinates.
-fn lat_lon_to_xyz(lat_deg: f64, lon_deg: f64, radius: f64) -> [f64; 3] {
+pub fn lat_lon_to_xyz(lat_deg: f64, lon_deg: f64, radius: f64) -> [f64; 3] {
     let lat_rad = lat_deg.to_radians();
     let lon_rad = lon_deg.to_radians();
 
